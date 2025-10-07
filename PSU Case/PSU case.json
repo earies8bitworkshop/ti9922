@@ -1,0 +1,41 @@
+{
+    "parameterSets": {
+        "design default values": {
+            "cable_hole_diameter_mm": "8",
+            "inner_height_excluding_standoff_mm": "55",
+            "inner_length_between_posts_mm": "200",
+            "inner_width_excluding_standoff_mm": "110",
+            "post_diameter_mm": "10",
+            "render_box": "0",
+            "render_lid": "1",
+            "rounded_box": "1",
+            "screw_hole_diameter_mm": "5",
+            "standoff_height_mm": "5",
+            "standoff_thickness_mm": "2",
+            "switch_hole_height_mm": "11",
+            "switch_hole_width_mm": "28",
+            "vent_count": "15",
+            "vent_thickness_mm": "2",
+            "wall_thickness_mm": "5"
+        },
+        "TI9922": {
+            "cable_hole_diameter_mm": "8",
+            "inner_height_excluding_standoff_mm": "55",
+            "inner_length_between_posts_mm": "200",
+            "inner_width_excluding_standoff_mm": "110",
+            "post_diameter_mm": "10",
+            "render_box": "0",
+            "render_lid": "1",
+            "rounded_box": "1",
+            "screw_hole_diameter_mm": "5",
+            "standoff_height_mm": "5",
+            "standoff_thickness_mm": "2",
+            "switch_hole_height_mm": "11",
+            "switch_hole_width_mm": "28",
+            "vent_count": "15",
+            "vent_thickness_mm": "2",
+            "wall_thickness_mm": "5"
+        }
+    },
+    "fileFormatVersion": "1"
+}
