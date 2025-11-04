@@ -14,8 +14,12 @@ vent_thickness_mm = 2;      // mm, thickness of vents height
 
 
 /* [Cable holes on the small end of the box] */
+left_cable_hole_shape = 0; // [0:Circular, 1:Square]
+left_cable_hole_position = 1; // [0:None, 1:Middle, 2:Top]
 left_cable_hole_diameter_mm = 10;      // mm, diameter of holes on box end
+right_cable_hole_shape = 0; // [0:Circular, 1:Square]
 right_cable_hole_diameter_mm = 10;      // mm, diameter of holes on box end
+right_cable_hole_position = 1; // [0:None, 1:Middle, 2:Top]
 left_cable_hole_radius = left_cable_hole_diameter_mm / 2;  // radius for convenience
 right_cable_hole_radius = right_cable_hole_diameter_mm / 2;  // radius for convenience
 
@@ -89,25 +93,84 @@ module box_body() {
             translate([wall_thickness_mm, wall_thickness_mm, wall_thickness_mm])
                 cube([inner_length, inner_width, outer_height+wall_thickness_mm ]);
 
-            // Subtract two circular holes on the small end wall, rotated to face correctly
+            // Subtract two  holes on the small end wall, rotated to face correctly
             union() {
+
+
                 rotate([0, 90, 0]){
+                 if(right_cable_hole_position==1) {
+                  if(right_cable_hole_shape==0) {
+
                     translate([
                         -outer_height/2,                                    // Slightly offset outside small end
                         wall_thickness_mm + inner_width / 3,     // 1/3 along width
-                        outer_height / 2     // Halfway up height
+                        1
                     ])
                     cylinder(h=outer_width + 2, r=right_cable_hole_radius, center=true, $fn=50);
+                      } else {
+                    translate([
+                        -outer_height/2-right_cable_hole_radius-1,                                    // Slightly offset outside small end
+                        wall_thickness_mm + inner_width / 3 - right_cable_hole_radius,     // 1/3 along width
+                        -0.5
+                    ])
+                    cube([right_cable_hole_diameter_mm, right_cable_hole_diameter_mm, wall_thickness_mm+1]);
+                   }
+                  } else if(right_cable_hole_position==2){
+                  if(right_cable_hole_shape==0) {
+                    translate([
+                        -outer_height,                                    // Slightly offset outside small end
+                        wall_thickness_mm + inner_width / 3,     // 1/3 along width
+                        1
+                    ])
+                    cylinder(h=outer_width + 2, r=right_cable_hole_radius, center=true, $fn=50);
+                   } else {
+                    translate([
+                        -outer_height-right_cable_hole_radius-1,                                    // Slightly offset outside small end
+                        wall_thickness_mm + inner_width / 3- right_cable_hole_radius,     // 1/3 along width
+                        -0.5
+                    ])
+                    cube([right_cable_hole_diameter_mm,right_cable_hole_diameter_mm, wall_thickness_mm+1]);
+                   }
+               }
                 }
                 rotate([0, 90, 0]){
+                  if(left_cable_hole_position==1) {
+                    if(left_cable_hole_shape==0) {
+
                     translate([
                         -outer_height/2,
-                        wall_thickness_mm + 2 * inner_width / 3, // 2/3 along width
-                        wall_thickness_mm + inner_height / 2
+                        wall_thickness_mm + 2 * inner_width / 3 - left_cable_hole_radius, // 2/3 along width
+                        1
                     ])
                     cylinder(h=outer_width + 2, r=left_cable_hole_radius, center=true, $fn=50);
-                }
+                    } else {
+                     translate([
+                        -outer_height/2-left_cable_hole_radius-1,                                    // Slightly offset outside small end
+                        wall_thickness_mm + 2 * inner_width / 3 - left_cable_hole_radius,     // 1/3 along width
+                        -0.5
+                    ])
+                    cube([left_cable_hole_diameter_mm, left_cable_hole_diameter_mm, wall_thickness_mm+1]);
+                   }                       
+                } else if(left_cable_hole_position==2) {
+                  if(right_cable_hole_shape==0) {
+
+                    translate([
+                        -outer_height,                                    // Slightly offset outside small end
+                        wall_thickness_mm + 2 * inner_width / 3,     // 1/3 along width
+                        1
+                    ])
+                    cylinder(h=outer_width + 2, r=left_cable_hole_radius, center=true, $fn=50);
+                }  else {
+                    translate([
+                        -outer_height-left_cable_hole_radius-1,                                    // Slightly offset outside small end
+                        wall_thickness_mm + 2 * inner_width / 3- left_cable_hole_radius,     // 1/3 along width
+                        -0.5
+                    ])
+                    cube([left_cable_hole_diameter_mm,left_cable_hole_diameter_mm, wall_thickness_mm+1]);
+                   }
+               }
             }
+        }
 
                 if(switch_shape) {
                  if(switch_shape==2) {
