@@ -15,6 +15,10 @@ STL enclosure top and bottom can be printed in two halves.
 
 I have edited the OpenScad file that creates the 3d print STL files for the TI-99/22 case. Although I have a large 3d printer, its not big enough to print the enclosure in one hit. So I have added a 'side' option that allows you to create the top left and right, and the bottom left and right as separate 3d renderings. One side also contains tabs that glue to the other. Completed STL files are also in the repo.
 
+Update 6th November 2025
+
+Power Supply Case can now be embossed with a logo on the lid.
+
 Update 12th August 2025
 
 Power supply enclosure
