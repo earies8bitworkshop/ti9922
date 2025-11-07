@@ -1,32 +1,23 @@
 
 /********************************************************************
  * PARAMETRIC ELECTRONICS BOX WITH LID, POSTS, VENTS & STANDOFFS
- * Cleaned, structured, and commented version (logic unchanged)
  ********************************************************************/
 
-/*-----------------------------
-  INTERNAL DIMENSIONS (mm)
------------------------------*/
+/*  [INTERNAL DIMENSIONS (mm)] */
+
 inner_length_between_posts_mm = 220;
 inner_width_excluding_standoff_mm = 110;
 inner_height_excluding_standoff_mm = 50;
 standoff_thickness_mm = 2;
 standoff_height_mm = 5;
-
-/*-----------------------------
-  WALL & STRUCTURAL THICKNESS
------------------------------*/
 wall_thickness_mm = 5;
 
-/*-----------------------------
-  VENT SETTINGS
------------------------------*/
+/*  [VENT SETTINGS] */
+
 vent_count = 15;
 vent_thickness_mm = 2;
 
-/*-----------------------------
-  CABLE HOLE SETTINGS
------------------------------*/
+/*  [CABLE HOLE SETTINGS]  */
 left_cable_hole_shape = 0;   // [0:Circular, 1:Square]
 left_cable_hole_position = 1; // [0:None, 1:Middle, 2:Top]
 left_cable_hole_diameter_mm = 10;
@@ -38,9 +29,7 @@ right_cable_hole_diameter_mm = 10;
 left_cable_hole_radius  = left_cable_hole_diameter_mm  / 2;
 right_cable_hole_radius = right_cable_hole_diameter_mm / 2;
 
-/*-----------------------------
-  CORNER POST SETTINGS
------------------------------*/
+/*  [CORNER POST SETTINGS]  */
 post_diameter_mm = 10;
 post_radius = post_diameter_mm / 2;
 screw_hole_diameter_mm = 5;
@@ -53,8 +42,8 @@ screw_hole_radius = screw_hole_diameter_mm / 2;
 inner_length = inner_length_between_posts_mm + 2 * post_diameter_mm + 0.1;
 
 // Adjust for stand-offs
-inner_width  = inner_width_excluding_standoff_mm + 1;
-inner_height = inner_height_excluding_standoff_mm + 0.5;
+inner_width  = inner_width_excluding_standoff_mm + 2*standoff_thickness_mm;
+inner_height = inner_height_excluding_standoff_mm + standoff_thickness_mm;
 
 // Outer dimensions (including walls)
 outer_length = inner_length + 2 * wall_thickness_mm;
@@ -64,16 +53,12 @@ outer_height = inner_height + wall_thickness_mm;
 // Post height equals total box height
 post_height = outer_height;
 
-/*-----------------------------
-  SWITCH HOLE SETTINGS
------------------------------*/
+/*   [SWITCH HOLE SETTINGS]  */
 switch_shape = 1;  // [0:None, 1:Rectangular, 2:Circular]
 switch_hole_width_mm  = 10;
 switch_hole_height_mm = 20;
 
-/*-----------------------------
-  LOGO SETTINGS
------------------------------*/
+/*  [LOGO SETTINGS]  */
 add_logo = 0; // [0:No, 1:Yes]
 logo_file = "logo.svg";
 logo_x = 100;
@@ -82,9 +67,7 @@ logo_z = 1;
 pad_x = 5;
 pad_y = 5;
 
-/*-----------------------------
-  RENDERING OPTIONS
------------------------------*/
+/*  [RENDERING OPTIONS]  */
 render_lid  = 1;
 render_box  = 1;
 rounded_box = 1;
@@ -359,7 +342,7 @@ module lid() {
                     assert(lid_thickness > logo_z, "Logo Z must be less than thickness of the lid");
                     difference() {
                         translate([length/2 - logo_x/2, width/2 - logo_y/2, 0])
-                            cube([logo_x, logo_y, lid_thickness]);
+                            cube([logo_x, logo_y, lid_thickness - logo_z]);
                     }
                 }
             }
@@ -383,7 +366,7 @@ module lid() {
           translate([length/2, width/2, 0])
             color("blue")
                 linear_extrude(height=lid_thickness)
-                    resize([logo_x - 3*lid_thickness - pad_x, 0, 0], auto=true)
+                    resize([logo_x - 3*lid_thickness - pad_x, logo_y - 3*lid_thickness - pad_y, 0])
                         import(logo_file, center=true);
         }
     }
